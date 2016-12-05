@@ -1,0 +1,22 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "name": "JavaScript",
+      "author": "David Flanagan",
+      "price": 4536
+    },
+    {
+      "id": 2,
+      "name": "JavaScript: The Good Parts",
+      "author": "Douglas Crockford",
+      "price": 1944
+    },
+    {
+      "id": 3,
+      "name": "入門 React",
+      "author": "Frankie Bagnardi, Jonathan Beebe",
+      "price": 2808
+    }
+  ]
+}
