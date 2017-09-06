@@ -10,7 +10,7 @@ class BookStore extends ReduceStore {
   }
   reduce(state, action) {
     switch(action.type) {
-      case keys.bookFetched:
+      case keys.book.fetched:
         return action.books;
       default:
         return state;
