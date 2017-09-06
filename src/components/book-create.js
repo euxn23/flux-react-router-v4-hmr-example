@@ -14,7 +14,7 @@ export default class BookCreate extends React.Component{
   handleForm(ev) {
     ev.preventDefault();
     BookAction.create(this.state);
-    this.props.router.transitionTo("/books");
+    this.props.history.push("/books");
   }
   onNameChange(ev) {
     ev.preventDefault();

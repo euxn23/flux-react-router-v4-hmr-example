@@ -6,7 +6,7 @@ export default class BookDetail extends React.Component {
     super(props);
   }
   render() {
-    const book = this.props.appState.books.find(b => b.id === +this.props.params.id) || {};
+    const book = this.props.appState.books.find(b => b.id === +this.props.match.id) || {};
     return (
       <div className="jumbotron">
         <h1>{book.name}</h1>
