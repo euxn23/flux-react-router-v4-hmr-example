@@ -7,10 +7,9 @@ import { AppContainer } from 'react-hot-loader';
 import App from './components/app';
 
 // Assets
-require('bootstrap/dist/css/bootstrap.css');
-require('font-awesome/css/font-awesome.css');
-require('./styles/app.less');
-
+import 'bootstrap/dist/css/bootstrap.css';
+import 'font-awesome/css/font-awesome.css';
+import './styles/app.less';
 
 ReactDOM.render(
   <App />,
