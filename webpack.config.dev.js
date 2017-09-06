@@ -1,23 +1,39 @@
 const webpack = require('webpack');
-
 const config = require('./webpack.config');
 
-const devServerHost = process.env.DEV_SERVER_HOST || '0.0.0.0';
-const devServerPort = process.env.DEV_SERVER_PORT || 8000;
+const host = process.env.DEV_SERVER_HOST || '0.0.0.0';
+const port = process.env.DEV_SERVER_PORT || 3000;
 
-module.exports = {
-  entry: [
-    'react-hot-loader/patch',
-    `webpack-dev-server/client?http://${devServerHost}:${devServerPort}`,
-    'webpack/hot/only-dev-server',
-    ...config.entry,
-  ],
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    ...config.plugins,
-  ],
-  devtool: 'inline-source-map',
-  output: config.output,
-  module: config.module,
-  resolve: config.resolve,
-};
+
+module.exports = Object.assign(
+  config,
+  {
+    entry: [
+      'react-hot-loader/patch',
+      ...config.entry,
+      `webpack-dev-server/client?http://${host}:${port}`,
+      'webpack/hot/dev-server',
+    ],
+    plugins: [
+      ...config.plugins,
+      new webpack.HotModuleReplacementPlugin(),
+    ],
+    module: Object.assign(
+      config.module,
+      {
+        loaders: [
+          ...config.module.loaders,
+          {
+            test: /\.jsx?$/,
+            exclude: /node_modules/,
+            loader: 'babel-loader',
+            options: {
+              presets: ['react'],
+              plugins: ['react-hot-loader/babel'],
+            }
+          },
+        ],
+      },
+    ),
+  },
+);

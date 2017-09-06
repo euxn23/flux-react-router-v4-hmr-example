@@ -1,14 +1,15 @@
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
+const config = require('./webpack.config.dev');
 
-const config = require('./webpack.config.dev.js');
-const devServerPort = process.env.DEV_SERVER_PORT || 8000;
+const compiler = webpack(config);
+const port = process.env.DEV_SERVER_PORT || 3000;
 
-new WebpackDevServer(webpack(config), {
+const server = new WebpackDevServer(compiler, {
   publicPath: config.output.publicPath,
   contentBase: 'src',
   inline: true,
   hot: true,
-}).listen(devServerPort, '0.0.0.0', err => {
-  if (err) return console.log(err);
+  stats: { colors: true },
 });
+server.listen(port, '0.0.0.0', err => console.log(err || `Webpack Server Listening at http://0.0.0.0:${port}`));

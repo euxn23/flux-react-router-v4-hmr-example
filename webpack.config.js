@@ -1,63 +1,60 @@
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+
 
 module.exports = {
   entry: [
     './src/index',
   ],
-
-  plugins: [
-    new webpack.NamedModulesPlugin(),
-    new HtmlWebpackPlugin({
-      hash: false,
-      template: './src/index.html',
-    }),
-    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /nb/),
-    new webpack.DefinePlugin({
-      WEBPACK_API_ENDPOINT: JSON.stringify(process.env.API_ENDPOINT),
-    }),
-  ],
-
-  devtool: 'cheap-module-source-map',
-
   output: {
     path: path.resolve(__dirname, 'public'),
     publicPath: '/',
     filename: 'bundle.js',
   },
-
+  plugins: [
+    new HtmlWebpackPlugin({
+      hash: false,
+      template: './src/static/index.html',
+    }),
+    new webpack.DefinePlugin({
+      WEBPACK_ENV_ENDPOINT: JSON.stringify(process.env.WEBPACK_ENV_ENDPOINT)
+    }),
+  ],
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel',
-      },
-      {
-        test: /\.less$/,
-        loader: 'style!css!less',
+        loader: 'babel-loader',
+        options: {
+          presets: ['react'],
+        }
       },
       {
         test: /\.css$/,
-        loader: 'style!css',
+        loader: 'style-loader!css-loader',
+      },
+      {
+        test: /\.less$/,
+        loader: 'style-loader!css-loader!less-loader',
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url?limit=10000&mimetype=application/font-woff',
+        loader: 'url-loader?limit=10000&mimetype=application/font-woff',
       },
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file',
+        loader: 'file-loader',
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: 'file?hash=sha512&digest=hex&name=assets/[hash].[ext]',
+        loader: 'file-loader?hash=sha512&digest=hex&name=assets/[hash].[ext]',
       },
     ],
   },
-
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
   },
+  devtool: 'eval',
 };

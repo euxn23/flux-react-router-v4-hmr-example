@@ -1,6 +1,6 @@
 export const config = {
   api: {
-    endpoint: WEBPACK_API_ENDPOINT || 'http://0.0.0.0:3000'
+    endpoint: WEBPACK_ENV_ENDPOINT || 'http://0.0.0.0:3000'
   }
 };
 export const keys = {
